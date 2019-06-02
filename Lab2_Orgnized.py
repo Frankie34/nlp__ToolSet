@@ -62,6 +62,22 @@ pattern = r'''(?x)    # set flag to allow verbose regexps
 # nltk.regexp_tokenize(text, pattern)
 
 
+# 除去词内元音
+deleteWords = []
+rule = r'^[AEIOUaeiou]+|[AEIOUaeiou]+$|[^AEIOUaeiou]'
+for w in words_D:
+    deleteWords.append(''.join(re.findall(rule, w)))
+print(deleteWords)
+
+# 正则表达式匹配
+rule = re.compile(r'^[abc].*ing$')
+resultWords = []
+for w in words_D:
+    m = re.match(rule, w)
+    if m:
+        resultWords.append(w)
+print(resultWords)
+
 
 # Search for word start with 'a' or 'b' or 'c' and endswith 'ing' #
 # save the result to a .txt file #
