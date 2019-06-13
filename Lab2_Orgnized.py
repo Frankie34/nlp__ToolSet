@@ -12,7 +12,7 @@ from nltk.corpus import PlaintextCorpusReader
 corpus_root = '/Users/junchengzhu/Lecture/nlp2019/Lab/Lab2/dict'
 wordlists = PlaintextCorpusReader(corpus_root, '.*')
 
-text = wordlists.words('PRINCE.txt')
+text = wordlists.words('SPEECH.txt')
 # print(len(text))
 
 
@@ -50,34 +50,26 @@ class IndexedText(object):
 content = IndexedText(porter, text)
 result = content.concordance('happy')
 
-
-# Regular Expressions 正则表达式分割 #
-pattern = r'''(?x)    # set flag to allow verbose regexps
-     ([A-Z]\.)+        # abbreviations, e.g. U.S.A.
-   | \w+(-\w+)*        # words with optional internal hyphens
-   | \$?\d+(\.\d+)?%?  # currency and percentages, e.g. $12.40, 82%
-   | \.\.\.            # ellipsis
-   | [][.,;"'?():-_`]  # these are separate tokens; includes ], [
-'''
-# nltk.regexp_tokenize(text, pattern)
-
+import re
 
 # 除去词内元音
 deleteWords = []
 rule = r'^[AEIOUaeiou]+|[AEIOUaeiou]+$|[^AEIOUaeiou]'
-for w in words_D:
+for w in text:
     deleteWords.append(''.join(re.findall(rule, w)))
 print(deleteWords)
+print("-------------------------")
 
 # 正则表达式匹配
 rule = re.compile(r'^[abc].*ing$')
 resultWords = []
-for w in words_D:
+for w in text:
     m = re.match(rule, w)
     if m:
         resultWords.append(w)
+        
 print(resultWords)
-
+print("-------------------------")
 
 # Search for word start with 'a' or 'b' or 'c' and endswith 'ing' #
 # save the result to a .txt file #
@@ -91,7 +83,16 @@ for theWord in text:
                 
 
 output_file.close()                
-                
-          
-                
+
+"""
+# Regular Expressions 正则表达式分割 #
+pattern = r'''(?x)    # set flag to allow verbose regexps
+     ([A-Z]\.)+        # abbreviations, e.g. U.S.A.
+   | \w+(-\w+)*        # words with optional internal hyphens
+   | \$?\d+(\.\d+)?%?  # currency and percentages, e.g. $12.40, 82%
+   | \.\.\.            # ellipsis
+   | [][.,;"'?():-_`]  # these are separate tokens; includes ], [
+'''
+#nltk.regexp_tokenize(text, pattern)
+"""
                 

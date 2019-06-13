@@ -23,17 +23,17 @@ for (word, tag) in brown.tagged_words(categories='news', tagset='universal'):
 
 from operator import itemgetter
 sorted(counts.items(), key=itemgetter(1), reverse=False)
-# print([t for t, c in sorted(counts.items(), key=itemgetter(1), reverse=False)])
+# print([(t, c) for t, c in sorted(counts.items(), key=itemgetter(1), reverse=False)])
 
 
 
 #  we index words according to their last two letter  #
-last_letters = defaultdict(list)
+first_letters = defaultdict(list)
 for (word, tag) in brown.tagged_words(categories='news', tagset='universal'):
      key = word[0:2]
-     last_letters[key].append(word)
+     first_letters[key].append(word)
 
-# print(last_letters['ly'])
+# print(first_letters['ly'])
      
      
 #  Tagging  #
@@ -48,6 +48,7 @@ test_sents = brown_tagged_sents[size:]
 t0 = nltk.DefaultTagger('NN')
 t1 = nltk.UnigramTagger(train_sents, backoff=t0)
 t2 = nltk.BigramTagger(train_sents, backoff=t1)
+print(t2.evaluate(test_sents))
 
 
 from pickle import dump
